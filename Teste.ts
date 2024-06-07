@@ -1,3 +1,10 @@
+Ótimo! Vamos ajustar o serviço de autenticação para usar a URL da sua API e o componente de login para fazer a chamada correta. 
+
+### 1. Atualizar o Serviço de Autenticação
+
+Atualize o serviço de autenticação para utilizar a URL da sua API.
+
+```typescript
 // auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -26,19 +33,13 @@ export class AuthService {
     );
   }
 }
-_
+```
 
+### 2. Atualizar o Componente de Login
 
+Certifique-se de que o componente de login utiliza os parâmetros corretos e trate as respostas da API apropriadamente.
 
-
-#
-
-
-
-
-
-#
-
+```typescript
 // login.component.ts
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
@@ -68,18 +69,13 @@ export class LoginComponent {
     );
   }
 }
+```
 
+### 3. Atualizar o Template do Componente de Login
 
+Certifique-se de que o template do componente de login usa os nomes corretos de variáveis e a diretiva de formulário Angular.
 
-
-#
-
-
-
-
-
-#
-
+```html
 <!-- login.component.html -->
 <div>
   <h2>Login</h2>
@@ -96,17 +92,40 @@ export class LoginComponent {
   </form>
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>
+```
 
+### 4. Certificar-se de que `HttpClientModule` está Importado no `AppModule`
 
+Verifique que o `HttpClientModule` está corretamente importado no seu `AppModule`.
 
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
+import { AppComponent } from './app.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AppRoutingModule } from './app-routing.module';
 
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-
-
-
-
-
-
-
-
+Com estas configurações, ao submeter o formulário de login, a API de autenticação será chamada com os parâmetros `usuario` e `senha`. Se a autenticação for bem-sucedida, o usuário será redirecionado para a página "home". Em caso de erro, uma mensagem de erro será exibida.
